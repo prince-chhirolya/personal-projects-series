@@ -18,6 +18,24 @@ NLTK | Python | Pillow | TensorFlow | Python APIs | Natural Language Toolkit (NL
 
 Develop a chatbot using deep learning techniques. The chatbot will be trained with a dataset including categories (intents), patterns, and responses. We’ll use a specialized recurrent neural network (LSTM) to detect the category of the user’s message, and the chatbot will choose a random response from a list of potential replies.
 
+## Live Demo
+Type the following command to execute the bot:
+
+```sh
+python3 main.py
+```
+
+Once our chatbot starts, write the following prompt:
+
+```sh
+help
+```
+Once you are done chatting with the bot, type the following command to exit:
+
+```sh
+/quit
+```
+
 ## Screenshots
 
 ![Chatbot Screenshot](./chatbot.png)
