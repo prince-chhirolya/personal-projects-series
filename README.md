@@ -1,2 +1,2 @@
-# personal-projects-series
-My Personal Project Series 
+# Personal Projects Series
+My Personal Project Series

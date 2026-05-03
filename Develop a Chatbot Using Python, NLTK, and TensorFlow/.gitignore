@@ -1,0 +1,12 @@
+# Files to be ignored
+
+__pycache__/
+.ipynb_checkpoints/
+
+words.pkl/
+classes.pkl/
+trained_model.keras/
+
+*.pkl
+*.log
+
