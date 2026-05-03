@@ -1,0 +1,227 @@
+
+{
+    "intents": [
+        {
+            "tag": "greeting", 
+            "patterns": [
+                "Hi there",
+                "How are you",
+                "Is anyone there?",
+                "Hey",
+                "Hola",
+                "Hello",
+                "Good day"
+            ],
+            "responses": [
+                "Hello! How can I assist you today?",
+                "Hi there! Need some assistance?",
+                "Hey! What brings you here today?"
+            ],
+            "context": ["initial_greeting"]
+        },
+        {
+            "tag": "goodbye",
+            "patterns": [
+                "Bye",
+                "See you later",
+                "Goodbye",
+                "Nice chatting with you, bye",
+                "Till next time"
+            ],
+            "responses": [
+                "Goodbye! Feel free to return if you have more questions.",
+                "See you soon! Take care!",
+                "Bye! Looking forward to chatting with you again."
+            ],
+            "context": ["session_ending"]
+        },
+        {
+            "tag": "thanks",
+            "patterns": [
+                "Thanks",
+                "Thank you",
+                "That's helpful",
+                "Awesome, thanks",
+                "Thanks for helping me"
+            ],
+            "responses": [
+                "You're welcome! I'm always here to help.",
+                "Glad I could assist! Is there anything else you'd like to know?",
+                "Anytime! Feel free to explore more topics."
+            ],
+            "context": ["expression_of_gratitude"]
+        },
+        {
+            "tag": "noanswer",
+            "patterns": [],
+            "responses": [
+                "I'm sorry, I didn't quite catch that. Could you say it again?",
+                "Could you please provide more details?",
+                "Not sure I understand. Can you elaborate?"
+            ],
+            "context": ["clarification_request"]
+        },
+        {
+            "tag": "options",
+            "patterns": [
+                "How can you help me?",
+                "What can you do?",
+                "What help do you provide?",
+                "How can you be helpful?",
+                "What support is offered?"
+            ],
+            "responses": [
+                "I can assist with healthcare inquiries, finding pharmacies or hospitals, tracking health symptoms, and general health advice.",
+                "I'm here to help you learn about general health topics, locate healthcare facilities, and understand drug interactions."
+            ],
+            "context": ["feature_overview"]
+        },
+        {
+            "tag": "adverse_drug",
+            "patterns": [
+                "How to check for adverse drug reactions?",
+                "Open the adverse drugs module",
+                "List drugs causing adverse effects",
+                "List drugs safe for certain conditions",
+                "Which drugs don't have adverse reactions?"
+            ],
+            "responses": [
+                "Adverse drug reactions depend on individual conditions. For accurate information, consult a healthcare professional.",
+                "Certain drugs are known to have specific reactions. It's always best to consult your healthcare provider for personalized advice about any medications you're considering or currently taking.",
+                "For educational purposes, many resources list common adverse reactions. However, consulting with a healthcare provider will give you tailored and detailed advice."
+            ],
+            "context": ["adverse_drug_info"]
+        },
+        {
+            "tag": "adverse_drug_info",
+            "patterns": [
+                "Tell me about adverse drug reactions",
+                "Explain what an adverse drug reaction is",
+                "What are some common adverse drug reactions?",
+                "Adverse drug reactions explanation"
+            ],
+            "responses": [
+                "Adverse drug reactions are harmful effects that occur after taking medication as prescribed. They can vary from mild to severe and require medical attention."
+            ],
+            "context": [
+                "adverse_drug_explanation"
+            ]
+        },
+
+        {
+            "tag": "blood_pressure",
+            "patterns": [
+                "Open blood pressure module",
+                "Tasks related to blood pressure",
+                "Blood pressure data entry",
+                "I want to log blood pressure results",
+                "Blood pressure data management"
+            ],
+            "responses": [
+                "To track your blood pressure, consider using digital tools or apps designed for health management. Let me know if you need tips on keeping your blood pressure in check."
+            ],
+            "context": ["blood_pressure_management"]
+        },
+        {
+            "tag": "blood_pressure_tips",
+            "patterns": [
+                "Yes, I need tips on keeping my blood pressure in check",
+                "How can I manage my blood pressure better?",
+                "What are some guidelines for healthy blood pressure?",
+                "Any tips for maintaining blood pressure?",
+                "How to keep blood pressure down?"
+            ],
+            "responses": [
+                "Here are some tips to help manage your blood pressure: maintain a balanced diet low in salt, exercise regularly, avoid excessive alcohol consumption, reduce stress through meditation or yoga, and ensure you get enough sleep. Regularly consult your healthcare provider for personalized advice.",
+                "To keep your blood pressure in check, focus on a heart-healthy diet, stay active, limit alcohol intake, and manage stress levels. It's also wise to keep a regular schedule of health check-ups."
+            ],
+            "context": ["blood_pressure_advice"]
+        },
+        {
+            "tag": "blood_pressure_search",
+            "patterns": [
+                "I want to search for blood pressure result history",
+                "Blood pressure for a patient",
+                "Load patient blood pressure result",
+                "Show blood pressure results for a patient",
+                "Find blood pressure results by ID"
+            ],
+            "responses": [
+                "To access blood pressure history, ensure you maintain records through a health app or consult your healthcare provider for detailed reports.",
+                "If searching with a Patient ID is part of your health management system, please ensure it is secure and authenticated."
+            ],
+            "context": ["search_blood_pressure_advise"]
+        },
+        {
+            "tag": "search_blood_pressure_by_patient_id",
+            "patterns": [],
+            "responses": [
+                "Remember to follow up with relevant records management systems to view detailed blood pressure histories."
+            ],
+            "context": [""]
+        },
+
+        {
+            "tag": "pharmacy_search",
+            "patterns": [
+                "Find me a nearby pharmacy",
+                "Locate pharmacy",
+                "Pharmacy search",
+                "List pharmacies",
+                "Where's the nearest pharmacy?"
+            ],
+
+            "responses": [
+                "I recommend using Google Maps or searching online with your location for the most accurate and up-to-date pharmacy information.",
+                "For specific pharmacy locations, try an online search provider like Google to see nearby options and reviews."
+            ],
+            
+            "context": ["pharmacy_location_inquiry"]
+        },
+        {
+            "tag": "hospital_search",
+            "patterns": [
+                "Look up a hospital",
+                "Find hospital for patient transfer",
+                "Search hospital data",
+                "Locate hospital for treatment",
+                "Hospital search"
+            ],
+            "responses": [
+                "For precise hospital locations and details, I suggest using online maps or search engines like Google.",
+                "You might find more detailed and updated hospital information by searching online with your area or hospital name on Google."
+            ],
+
+            "context": ["hospital_location_inquiry"]
+        },
+        {
+            "tag": "common_health_questions",
+            "patterns": [
+                "What are common symptoms to watch for?",
+                "Tell me about general health tips",
+                "What can I do to stay healthy?",
+                "How to identify adverse health symptoms?"
+            ],
+            "responses": [
+                "Maintaining health is crucial; regular check-ups, exercise, eating well, and staying hydrated are key. Would you like tips on any specific topic?",
+                "For good health, keep an eye on symptoms like fatigue or fever, and manage stress. Need advice on any particular area?"
+            ],
+            "context": ["general_health_advice"]
+        },
+        {
+            "tag": "closure",
+            "patterns": [
+                "That's all I need",
+                "Thank you, I'm good now",
+                "I'm done",
+                "That was helpful, goodbye",
+                "I have all the information I need"
+            ],
+            "responses": [
+                "Great to hear! If you have more questions in the future, I'm here to help. Goodbye!",
+                "Wonderful! Feel free to return anytime you have more inquiries. Have a great day!"
+            ],
+            "context": ["session_ending"]
+        }
+    ]
+}
