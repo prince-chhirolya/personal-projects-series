@@ -1,0 +1,27 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # Python dependencies (requirements.txt or setup.py in root)
+  - package-ecosystem: "pip"
+    directory: "/"                # root of repo
+    schedule:
+      interval: "weekly"
+    target-branch: "main"
+
+  # Example: if have a frontend folder with Node.js
+  # - package-ecosystem: "npm"
+  #   directory: "/frontend"
+  #   schedule:
+  #     interval: "weekly"
+  #   target-branch: "main"
+
+  # Example: if use Dockerfiles
+  # - package-ecosystem: "docker"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "weekly"
+  #   target-branch: "main"
