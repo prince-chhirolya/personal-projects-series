@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <title>Web SIR</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  </head>
+  <body>
+
+    <py-config>
+      packages = ["matplotlib", "numpy", "scipy"]
+    </py-config>
+
+    <py-script>
+      import js
+      import numpy as np
+      import matplotlib.pyplot as plt
+      from scipy.integrate import odeint
+      from pyodide.ffi import create_proxy
+
+      def simple_sir_step_ahead(y, t, N, beta, gamma):
+          S, I = y
+          dsdt = -beta * I * (S / N)
+          didt = beta * I * (S / N) - gamma * I
+          return dsdt, didt
+
+
+      def simplified_sir_sim(N, sim_days, 
+      orig_infected, prob_infect, 
+      contact_with_people, inf_days):
+          y0 = N-orig_infected, orig_infected
+          beta = prob_infect*contact_with_people
+          gamma = 1.0 / inf_days
+          t = np.linspace(0, sim_days-1, sim_days)
+          sim_res = odeint(simple_sir_step_ahead, y0, t, args=(N, beta, gamma))
+          return sim_res
+
+
+      def sir_phase_space_plot(N, sim_days, orig_infected, prob_infect, contact_with_people, inf_days):
+          y = simplified_sir_sim(N, sim_days, orig_infected, prob_infect, contact_with_people, inf_days)
+          plt.clf()
+          plt.plot(y[:, 0], y[:, 1])
+
+          # Direction fields creation process from: https://scipy-cookbook.readthedocs.io/items/LoktaVolterraTutorial.html
+          # Creating a grid and computing the direction at each point
+          nb_points = 20
+          ymax = plt.ylim(ymin=0)[1]
+          xmax = plt.xlim(xmin=0)[1]
+          x = np.linspace(0, xmax, nb_points)
+          y = np.linspace(0, ymax, nb_points)
+          X1 , Y1  = np.meshgrid(x, y) 
+          # Computing growth rate on the grid
+          DX1, DY1 = simple_sir_step_ahead([X1 , Y1], 0, N, prob_infect*contact_with_people, 1.0 / inf_days)
+          # Norm of the growth rate 
+          M = (np.hypot(DX1, DY1))    
+          # Avoiding zero division errors 
+          M[ M == 0] = 1.0
+          # Normalizing the arrows
+          DX1 /= M      
+          DY1 /= M
+
+          plt.title('Trajectories and direction fields')
+          # Drawing direction fields and using different colors to highlight gorwth speed
+          Q = plt.quiver(X1, Y1, DX1, DY1, M, pivot='mid', cmap=plt.cm.jet)
+          plt.xlabel('Susceptible')
+          plt.ylabel('Infected')
+          plt.grid()
+          plt.xlim(0, xmax)
+          plt.ylim(0, ymax)
+          display(plt, target="graph-area", append=False)
+
+
+      N, sim_days = int(js.document.getElementById("pop_size").value), int(js.document.getElementById("sim_days").value)
+      orig_infected = int(js.document.getElementById("orig_infected").value)
+      prob_infect = float(js.document.getElementById("prob_infect").value)
+      contact_with_people = int(js.document.getElementById("contact_with_people").value)
+      inf_days = int(js.document.getElementById("inf_days").value)
+      sir_phase_space_plot(N, sim_days, orig_infected, prob_infect, contact_with_people, inf_days)
+
+
+      def get_params(event):
+          N, sim_days = int(js.document.getElementById("pop_size").value), int(js.document.getElementById("sim_days").value)
+          orig_infected = int(js.document.getElementById("orig_infected").value)
+          prob_infect = float(js.document.getElementById("prob_infect").value)
+          contact_with_people = int(js.document.getElementById("contact_with_people").value)
+          inf_days = int(js.document.getElementById("inf_days").value)
+          sir_phase_space_plot(N, sim_days, orig_infected, prob_infect, contact_with_people, inf_days)
+
+      ele_proxy = create_proxy(get_params)
+
+      params = js.document.getElementsByName("params")
+      for ele in params:
+          ele.addEventListener("change", ele_proxy)
+
+    </py-script>
+
+    <div id="input" style="margin: 20px;">
+      Choose the simulation paramters to use: <br/>
+      <label for="pop_size"> Population Size</label>
+      <input type="number" id="pop_size" name="params" value=500 min="1"> <br> 
+      <label for="sim_days"> Simulation Days</label>
+      <input type="number" id="sim_days" name="params" value=100 min="1"> <br>
+      <label for="orig_infected"> Number of individuals originally infected</label>
+      <input type="number" id="orig_infected" name="params" value=3 min="1"> <br>
+      <label for="prob_infect"> Probability to get infected</label>
+      <input type="number" id="prob_infect" name="params" value=0.3 min="0" max="1"> <br>
+      <label for="contact_with_people"> Avg Number of people we are in close contact with</label>
+      <input type="number" id="contact_with_people" name="params" value=2 min="1"> <br>
+      <label for="contact_with_people"> Days the infection lasts</label>
+      <input type="number" id="inf_days" name="params" value=3 min="1"> <br>
+    </div>
+
+    <div id="graph-area"></div>
+  </body>
+</html>
